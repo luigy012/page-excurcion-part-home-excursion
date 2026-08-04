@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excursiones de un día — IVONNE TOUR RD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --sand:#fbf7ef; --panel:#fff; --ink:#1b241e; --muted:#5c6b60; --line:#e8e1d5;
+  --g:#12854c; --g-d:#0b5a34; --g2:#1a9e5c; --b:#0e86bd; --o:#e0742a; --o-d:#b0430f;
+  --dark:#0c1c14;
+}
+html{ scroll-behavior:smooth; }
+body{ font-family:'Be Vietnam Pro',sans-serif; background:var(--sand); color:var(--ink);
+  -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.7; }
+img{ display:block; max-width:100%; }
+.wrap{ max-width:1300px; margin:0 auto; padding:0 clamp(22px,5vw,54px); }
+
+/* ===== TIPOGRAFIA ===== */
+.h-sec{ font-family:'Plus Jakarta Sans'; font-weight:800; font-size:clamp(28px,3.8vw,44px);
+  letter-spacing:-.022em; line-height:1.08; }
+.h-green{ color:var(--g); } .h-orange{ color:var(--o); }
+.uline{ position:relative; white-space:nowrap; }
+.uline::after{ content:''; position:absolute; left:0; right:0; bottom:-5px; height:6px;
+  border-radius:5px; background:linear-gradient(90deg,var(--g2),var(--o)); }
+.lead{ font-size:16px; line-height:1.68; color:var(--muted); }
+.pill-o{ display:inline-block; font-family:'Plus Jakarta Sans'; font-weight:700;
+  font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; padding:8px 17px;
+  border-radius:100px; margin-bottom:17px; background:#fdeadb; color:var(--o-d); }
+
+/* ===== BOTONES ===== */
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:9px; border:none;
+  cursor:pointer; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:14.5px;
+  padding:14px 26px; border-radius:100px; text-decoration:none;
+  transition:background .25s, transform .18s, box-shadow .25s, color .25s; }
+.btn svg{ transition:transform .22s; }
+.btn:hover svg{ transform:translateX(4px); }
+.btn:active{ transform:scale(.97); }
+.btn-green{ background:var(--g); color:#fff; box-shadow:0 12px 26px -12px rgba(18,133,76,.75); }
+.btn-green:hover{ background:var(--g-d); transform:translateY(-3px); }
+.btn-orange{ background:var(--o); color:#fff; box-shadow:0 12px 26px -12px rgba(224,116,42,.8); }
+.btn-orange:hover{ background:var(--o-d); transform:translateY(-3px); }
+.btn-white{ background:#fff; color:var(--g-d); }
+.btn-white:hover{ background:#eef6f0; transform:translateY(-3px); }
+.btn-ghost{ background:rgba(255,255,255,.13); color:#fff; border:1.4px solid rgba(255,255,255,.32);
+  backdrop-filter:blur(8px); }
+.btn-ghost:hover{ background:rgba(255,255,255,.24); transform:translateY(-3px); }
+.btn-lg{ padding:18px 44px; font-size:16px; }
+/* brillo deslizante que cruza los botones al pasar el mouse */
+.btn{ position:relative; overflow:hidden; }
+.btn::after{ content:''; position:absolute; top:0; left:-70%; width:45%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+  transform:skewX(-20deg); pointer-events:none; }
+.btn:hover::after{ animation:shine .85s cubic-bezier(.3,.7,.4,1) forwards; }
+
+/* ===== NAV ===== */
+.nav{ position:absolute; top:0; left:0; right:0; z-index:40; display:flex; align-items:center;
+  justify-content:space-between; padding:18px clamp(22px,5vw,54px) 30px; color:#fff; }
+.brand{ font-family:'Plus Jakarta Sans'; font-weight:800; font-size:16px; letter-spacing:.32em;
+  word-spacing:6px; text-shadow:0 2px 14px rgba(0,0,0,.4); }
+.nav nav{ display:flex; gap:30px; }
+.nav nav a{ color:rgba(255,255,255,.94); text-decoration:none; font-size:14px; font-weight:500;
+  position:relative; text-shadow:0 2px 10px rgba(0,0,0,.35); }
+.nav nav a::after{ content:''; position:absolute; left:0; right:0; bottom:-7px; height:2px;
+  border-radius:2px; background:var(--o); transform:scaleX(0); transform-origin:left;
+  transition:transform .3s cubic-bezier(.2,.8,.3,1); }
+.nav nav a:hover::after, .nav nav a.act::after{ transform:scaleX(1); }
+.book{ background:var(--o); color:#fff; border:none; cursor:pointer; font-family:'Plus Jakarta Sans';
+  font-weight:700; font-size:12.5px; letter-spacing:.09em; padding:12px 24px; border-radius:100px;
+  text-decoration:none; transition:transform .2s, background .25s; }
+.book:hover{ transform:translateY(-2px); background:var(--o-d); }
+@media(max-width:860px){ .nav nav{ display:none; } }
+
+/* ===== HERO (más corto que el de detalle: aquí es un encabezado, no una portada) ===== */
+.lhero{ position:relative; min-height:clamp(420px,58vh,560px); display:flex; align-items:flex-end;
+  overflow:hidden; isolation:isolate; padding-bottom:clamp(46px,6vw,74px); }
+.lhero-bg{ position:absolute; inset:0; z-index:-2; overflow:hidden; }
+.lhero-bg img{ width:100%; height:100%; object-fit:cover;
+  animation:heroZoom 18s ease-in-out infinite alternate; }
+@keyframes heroZoom{ from{ transform:scale(1) } to{ transform:scale(1.09) } }
+@media(prefers-reduced-motion:reduce){ .lhero-bg img{ animation:none; } }
+.lhero::after{ content:''; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(to top, rgba(6,16,11,.94) 8%, rgba(6,16,11,.6) 48%, rgba(6,16,11,.4) 100%); }
+.lhero .wrap{ position:relative; z-index:2; color:#fff; width:100%; }
+.lhero-badge{ display:inline-block; font-family:'Plus Jakarta Sans'; font-weight:700;
+  font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; padding:8px 17px;
+  border-radius:100px; margin-bottom:18px; background:var(--o); color:#fff; }
+.lhero h1{ font-family:'Plus Jakarta Sans'; font-weight:800;
+  font-size:clamp(34px,6vw,68px); line-height:1; letter-spacing:-.035em; margin-bottom:18px;
+  text-shadow:0 6px 40px rgba(0,0,0,.45); max-width:15ch; }
+.lhero p{ font-size:clamp(15.5px,2vw,19px); color:rgba(255,255,255,.88); max-width:54ch;
+  text-shadow:0 2px 16px rgba(0,0,0,.4); }
+
+/* ===== GRID DE TOURS ===== */
+.tours-sec{ padding:clamp(52px,7vw,86px) 0 clamp(64px,9vw,110px); }
+.tours-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+  flex-wrap:wrap; margin-bottom:clamp(28px,4vw,44px); }
+.tours-head .lead{ max-width:46ch; }
+.tcount{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:13px; color:var(--muted);
+  background:#fff; border:1px solid var(--line); padding:9px 18px; border-radius:100px;
+  white-space:nowrap; }
+
+/* ===== TABS por tipo ===== */
+.tabs{ display:flex; gap:9px; flex-wrap:wrap; margin-bottom:clamp(26px,3.5vw,38px); }
+.tab{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:14px; color:var(--muted);
+  background:#fff; border:1.6px solid var(--line); padding:11px 22px; border-radius:100px;
+  cursor:pointer; transition:color .25s, background .25s, border-color .25s, transform .2s;
+  position:relative; }
+.tab:hover{ color:var(--ink); border-color:#d9cfbe; transform:translateY(-2px); }
+.tab.is-active{ color:#fff; background:var(--g); border-color:var(--g);
+  box-shadow:0 12px 24px -12px rgba(18,133,76,.8); }
+
+.tgrid{ display:flex; flex-direction:column; gap:clamp(18px,2vw,24px); }
+/* animación de entrada al cambiar de tab */
+.tcard.enter{ animation:cardIn .5s cubic-bezier(.2,.8,.3,1) both; }
+@keyframes cardIn{ from{ opacity:0; transform:translateY(24px); } to{ opacity:1; transform:none; } }
+
+/* --- LA CAJITA HORIZONTAL --- */
+.tcard{ background:#fff; border:1px solid var(--line); border-radius:24px; overflow:hidden;
+  text-decoration:none; color:inherit; position:relative;
+  display:grid; grid-template-columns:minmax(280px,400px) 1fr;
+  box-shadow:0 30px 60px -50px rgba(0,0,0,.5); will-change:transform;
+  transition:transform .5s cubic-bezier(.2,.8,.3,1), box-shadow .4s, border-color .4s; }
+.tcard:hover{ transform:translateY(-5px);
+  box-shadow:0 50px 90px -44px rgba(0,0,0,.5); border-color:#d9cfbe; }
+@media(max-width:820px){ .tcard{ grid-template-columns:1fr; } }
+
+.tcard-media{ position:relative; overflow:hidden; background:#0d1a13; min-height:260px; }
+.tcard-media img{ width:100%; height:100%; object-fit:cover; position:absolute; inset:0;
+  transition:transform 1s cubic-bezier(.2,.8,.3,1), filter .6s ease; }
+.tcard:hover .tcard-media img{ transform:scale(1.08); filter:saturate(1.15) brightness(1.05); }
+.tcard-media::after{ content:''; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(to top, rgba(8,20,14,.55), transparent 46%); }
+/* destello de luz que cruza la foto al pasar el mouse */
+.tcard-media::before{ content:''; position:absolute; top:0; left:-75%; width:50%; height:100%;
+  z-index:2; pointer-events:none; transform:skewX(-22deg);
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent); }
+.tcard:hover .tcard-media::before{ animation:shine .9s cubic-bezier(.3,.7,.4,1) forwards; }
+@keyframes shine{ to{ left:135%; } }
+
+/* cinta "más elegido" */
+.tflag{ position:absolute; top:14px; left:14px; z-index:4; display:inline-flex; align-items:center;
+  gap:6px; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; padding:7px 14px; border-radius:100px; color:#fff;
+  background:var(--o); box-shadow:0 10px 22px -10px rgba(224,116,42,.9); }
+.tflag svg{ animation:twinkle 2.4s ease-in-out infinite; }
+@keyframes twinkle{ 0%,100%{ transform:scale(1); opacity:1 } 50%{ transform:scale(1.25); opacity:.75 } }
+/* rating flotante */
+.trate{ position:absolute; top:14px; right:14px; z-index:4; display:inline-flex; align-items:center;
+  gap:5px; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:12.5px; color:#fff;
+  background:rgba(6,16,11,.55); backdrop-filter:blur(10px); padding:6px 12px; border-radius:100px; }
+.trate svg{ color:#ffc94d; }
+/* días, sobre la imagen abajo */
+.tdur{ position:absolute; left:14px; bottom:12px; z-index:4; display:inline-flex; align-items:center;
+  gap:7px; font-family:'Plus Jakarta Sans'; font-weight:600; font-size:12px; color:#fff;
+  background:rgba(6,16,11,.5); backdrop-filter:blur(8px); padding:6px 13px; border-radius:100px;
+  transition:transform .35s cubic-bezier(.2,.8,.3,1); }
+.tcard:hover .tdur{ transform:translateY(-3px); }
+
+.tcard-body{ padding:32px 34px; display:flex; flex-direction:column; }
+/* dos columnas internas: info | compra */
+.body-cols{ display:grid; grid-template-columns:1fr minmax(240px,300px); gap:44px; align-items:start; }
+.col-buy{ display:flex; flex-direction:column; }
+@media(max-width:1080px){ .body-cols{ grid-template-columns:1fr; gap:20px; } }
+@media(max-width:820px){ .tcard-body{ padding:22px 20px; } }
+.ttag{ display:inline-block; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10.5px;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--g-d); background:#e4f2ea;
+  padding:5px 12px; border-radius:100px; margin-bottom:11px; align-self:flex-start;
+  transition:background .3s, color .3s; }
+.tcard:hover .ttag{ background:var(--g); color:#fff; }
+.tcard-body h3{ font-family:'Plus Jakarta Sans'; font-weight:800; font-size:24px;
+  letter-spacing:-.02em; line-height:1.12; margin-bottom:11px; transition:color .3s; }
+.tcard:hover .tcard-body h3{ color:var(--g-d); }
+.tcard-hook{ font-size:14.5px; color:var(--muted); line-height:1.7; margin-bottom:22px; }
+
+/* zona (a dónde va) */
+.zona{ display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600;
+  color:var(--g-d); margin-bottom:14px; }
+.zona svg{ flex-shrink:0; }
+
+.tmeta{ display:flex; gap:16px; flex-wrap:wrap; align-items:center; padding:16px 0; margin-bottom:22px;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.tmeta div{ display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--muted); }
+.tmeta div b{ font-family:'Plus Jakarta Sans'; font-weight:700; color:var(--ink); }
+.tmeta svg{ color:var(--g); flex-shrink:0; transition:transform .3s; }
+.tcard:hover .tmeta svg{ transform:scale(1.15); }
+/* badge de nivel con color según intensidad */
+.nivel{ display:inline-flex; align-items:center; gap:5px; font-family:'Plus Jakarta Sans';
+  font-weight:700; font-size:11px; letter-spacing:.02em; padding:4px 10px; border-radius:100px; }
+.nivel svg{ width:12px; height:12px; }
+.nv-rel{ background:#e4f2ea; color:var(--g-d); }
+.nv-act{ background:#e2f0f7; color:#0b6a94; }
+.nv-ext{ background:#fdeadb; color:var(--o-d); }
+.nivel svg{ color:currentColor !important; }
+
+/* qué incluye (chips) */
+.incluye{ margin-bottom:22px; }
+.incl-tit{ display:block; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10.5px;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--muted); margin-bottom:11px; }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.chip{ display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500;
+  color:var(--ink); background:var(--sand); border:1px solid var(--line);
+  padding:6px 13px; border-radius:100px; transition:background .25s, border-color .25s; }
+.chip svg{ color:var(--g); flex-shrink:0; }
+.tcard:hover .chip{ background:#eef6f0; border-color:#cfe4d7; }
+
+/* facts que quitan dudas (recogida, cupo, niños) */
+.tfacts{ display:flex; flex-direction:column; gap:11px; margin-bottom:0;
+  padding:18px 0 4px; border-top:1px dashed var(--line); }
+.fact{ display:flex; align-items:center; gap:10px; font-size:13px; color:var(--ink); font-weight:500; line-height:1.4; }
+.fact svg{ color:var(--g); flex-shrink:0; }
+.fact.ok svg{ color:var(--g); }
+.fact.no{ color:var(--muted); }
+.fact.no svg{ color:var(--muted); }
+
+/* prueba social junto a la zona */
+.viaj{ color:var(--muted); font-weight:500; }
+
+/* horarios de salida (pastillas) */
+.hsal{ margin-bottom:22px; }
+.hsal-tit{ display:inline-flex; align-items:center; gap:6px; font-family:'Plus Jakarta Sans';
+  font-weight:700; font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:11px; }
+.hsal-tit svg{ color:var(--o); }
+.hsal-list{ display:flex; flex-wrap:wrap; gap:7px; }
+.hchip{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:12.5px; color:var(--ink);
+  background:#fff; border:1.5px solid var(--line); padding:6px 13px; border-radius:100px;
+  transition:border-color .25s, background .25s, color .25s; }
+.tcard:hover .hchip{ border-color:var(--o); color:var(--o-d); }
+
+/* bloque de pago 20% — el desbloqueador */
+.paybox{ position:relative; background:linear-gradient(120deg,#eafaef,#d6f0e0);
+  border:2px solid var(--g); border-radius:16px; padding:18px 20px; margin-bottom:18px;
+  overflow:hidden; animation:glow 2.4s ease-in-out infinite; }
+@keyframes glow{ 0%,100%{ box-shadow:0 8px 22px -12px rgba(18,133,76,.5) }
+  50%{ box-shadow:0 8px 30px -6px rgba(18,133,76,.75) } }
+@media(prefers-reduced-motion:reduce){ .paybox{ animation:none; box-shadow:0 8px 22px -12px rgba(18,133,76,.5); } }
+.paybox-head{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.paybox-head svg{ color:var(--g); flex-shrink:0; width:18px; height:18px; }
+.paybox-head span{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:13px;
+  letter-spacing:.02em; color:var(--g-d); text-transform:uppercase; }
+.paybox-main{ display:flex; align-items:center; gap:10px; }
+.paybox-main b{ font-family:'Plus Jakarta Sans'; font-weight:800; font-size:26px;
+  color:var(--o-d); letter-spacing:-.02em; }
+.paybox-pct{ display:inline-block; background:var(--o); color:#fff; font-weight:800; font-size:12px;
+  padding:4px 12px; border-radius:100px; }
+.paybox-sub{ font-size:12.5px; color:var(--muted); margin-top:11px; line-height:1.55; }
+
+.tprice{ display:flex; align-items:baseline; gap:2px; margin-bottom:14px; }
+.tprice .was{ font-size:14px; color:var(--muted); text-decoration:line-through; margin-right:7px; }
+.tprice .now{ font-family:'Plus Jakarta Sans'; font-weight:800; font-size:30px; color:var(--g-d);
+  letter-spacing:-.02em; display:inline-block; transition:transform .3s cubic-bezier(.3,1.4,.5,1); }
+.tcard:hover .tprice .now{ transform:scale(1.05); }
+.tprice .per{ font-size:12.5px; color:var(--muted); margin-left:3px; }
+
+/* ===== LOS DOS BOTONES GRANDES ===== */
+.cardbtns{ display:flex; flex-direction:column; gap:10px; margin-top:auto; }
+.cbtn{ display:flex; align-items:center; gap:12px; text-decoration:none; border-radius:15px;
+  padding:14px 18px; position:relative; overflow:hidden; z-index:0;
+  transition:transform .25s, box-shadow .3s, background .3s, border-color .3s; }
+.cbtn span{ display:flex; flex-direction:column; line-height:1.25; }
+.cbtn b{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:15px; }
+.cbtn small{ font-size:11.5px; opacity:.85; font-weight:500; }
+.cbtn svg{ flex-shrink:0; }
+/* principal: reservar (verde, brillo) */
+.cbtn-go{ background:var(--g); color:#fff; justify-content:flex-start;
+  box-shadow:0 14px 26px -14px rgba(18,133,76,.9); }
+.cbtn-go::after{ content:''; position:absolute; top:0; left:-60%; width:45%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+  transform:skewX(-20deg); pointer-events:none; }
+.cbtn-go:hover{ background:var(--g-d); transform:translateY(-2px);
+  box-shadow:0 20px 34px -14px rgba(18,133,76,.95); }
+.cbtn-go:hover::after{ animation:shine .85s cubic-bezier(.3,.7,.4,1) forwards; }
+/* secundario: ver detalles (outline suave, se ve botón pero no compite) */
+.cbtn-alt{ background:#fff; color:var(--ink); border:1.5px solid #cfe4d7;
+  justify-content:space-between; }
+.cbtn-alt b{ color:var(--ink); }
+.cbtn-alt small{ color:var(--muted); }
+.cbtn-alt svg{ color:var(--g); background:#eef7f1; border-radius:50%; padding:6px; width:28px; height:28px;
+  box-sizing:border-box; transition:transform .3s, background .3s, color .3s; flex-shrink:0; }
+.cbtn-alt:hover{ background:#f5faf6; border-color:var(--g); transform:translateY(-2px); }
+.cbtn-alt:hover svg{ background:var(--g); color:#fff; transform:translateX(3px); }
+
+/* cancelación (confianza) */
+.cancela{ display:flex; align-items:center; gap:7px; margin-top:14px; font-size:12.5px;
+  font-weight:600; color:var(--g-d); }
+.cancela svg{ color:var(--g); flex-shrink:0; }
+
+.tcupo{ margin-top:11px; font-size:11.5px; color:var(--o-d); font-weight:600;
+  display:flex; align-items:center; gap:6px; }
+.tcupo i{ width:7px; height:7px; border-radius:50%; background:var(--o); display:inline-block;
+  box-shadow:0 0 0 0 rgba(224,116,42,.5); animation:pulse 2.2s ease-out infinite; }
+@keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(224,116,42,.5) }
+  70%{ box-shadow:0 0 0 7px rgba(224,116,42,0) } 100%{ box-shadow:0 0 0 0 rgba(224,116,42,0) } }
+
+/* ===== SECCIÓN FINAL ===== */
+.lcta{ position:relative; background:linear-gradient(130deg,#0e2b1c,#0a1a12);
+  color:#fff; padding:clamp(56px,8vw,96px) 0; overflow:hidden; }
+.lcta::before{ content:''; position:absolute; width:420px; height:420px; border-radius:50%;
+  filter:blur(90px); background:rgba(26,158,92,.28); top:-140px; right:-100px; pointer-events:none; }
+.lcta::after{ content:''; position:absolute; width:360px; height:360px; border-radius:50%;
+  filter:blur(90px); background:rgba(224,116,42,.2); bottom:-140px; left:-90px; pointer-events:none; }
+.lcta-in{ position:relative; z-index:2; text-align:center; max-width:680px; }
+.lcta-pill{ display:inline-block; font-family:'Plus Jakarta Sans'; font-weight:700; font-size:11.5px;
+  letter-spacing:.2em; text-transform:uppercase; padding:8px 18px; border-radius:100px;
+  margin-bottom:20px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); }
+.lcta h2{ font-family:'Plus Jakarta Sans'; font-weight:800; font-size:clamp(28px,4vw,46px);
+  letter-spacing:-.025em; line-height:1.08; margin-bottom:18px; }
+.lcta h2 span{ color:var(--g2); }
+.lcta p{ color:rgba(255,255,255,.82); max-width:56ch; margin:0 auto 30px; font-size:16px; line-height:2; }
+.lcta p mark{ background:transparent; color:#fff; font-weight:700; position:relative;
+  padding:2px 2px; white-space:normal;
+  box-shadow:inset 0 -.62em 0 rgba(26,158,92,.42); border-radius:3px; }
+.lcta-btns{ display:flex; gap:13px; flex-wrap:wrap; justify-content:center; }
+.lcta-note{ margin:22px auto 0; font-size:13px; color:rgba(255,255,255,.55); }
+
+/* ===== FOOTER (mismo del home) ===== */
+.blob{ position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; z-index:0; }
+.foot{ position:relative; background:linear-gradient(165deg,#0e2419 0%, #0a1a12 55%, #071410 100%); color:#c6d8cc; padding:clamp(56px,7vw,84px) 0 0; overflow:hidden; }
+.foot::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--g2),var(--b),var(--o)); }
+.foot .blob.fb1{ width:340px; height:340px; background:rgba(26,158,92,.22); top:-90px; left:-90px; }
+.foot .blob.fb2{ width:300px; height:300px; background:rgba(14,134,189,.18); bottom:-90px; right:-70px; }
+.foot .fgrid{ position:relative; z-index:2; display:grid; grid-template-columns:1.5fr 1fr 1fr 1.4fr; gap:44px; padding-bottom:46px; }
+.foot .fbrand{ font-family:'Plus Jakarta Sans'; font-weight:800; letter-spacing:.26em; font-size:17px; color:#fff; margin-bottom:16px; }
+.foot .fabout{ font-size:13.5px; line-height:1.7; color:rgba(255,255,255,.6); max-width:320px; margin-bottom:22px; }
+.foot .fsocial{ display:flex; gap:10px; }
+.foot .fsocial a{ width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); color:#fff; text-decoration:none; transition:background .25s, transform .25s, border-color .25s; }
+.foot .fsocial a:hover{ background:var(--g2); border-color:transparent; transform:translateY(-3px); }
+.foot h4{ font-family:'Plus Jakarta Sans'; font-weight:700; font-size:14px; color:#fff; letter-spacing:.04em; margin-bottom:18px; position:relative; padding-bottom:10px; }
+.foot h4::after{ content:''; position:absolute; left:0; bottom:0; width:28px; height:3px; border-radius:3px; background:var(--g2); }
+.foot ul{ list-style:none; display:flex; flex-direction:column; gap:11px; }
+.foot ul a{ color:rgba(255,255,255,.62); text-decoration:none; font-size:13.5px; transition:color .22s, padding-left .22s; display:inline-block; }
+.foot ul a:hover{ color:#fff; padding-left:6px; }
+.foot .fcontact li{ display:flex; align-items:flex-start; gap:11px; font-size:13.5px; color:rgba(255,255,255,.62); line-height:1.55; }
+.foot .fcontact svg{ flex-shrink:0; color:var(--g2); margin-top:2px; }
+.foot .fnews{ margin-top:20px; }
+.foot .fnews p{ font-size:12.5px; color:rgba(255,255,255,.5); margin-bottom:10px; }
+.foot .fform{ display:flex; gap:8px; }
+.foot .fform input{ flex:1; min-width:0; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:100px; padding:12px 18px; color:#fff; font-family:'Be Vietnam Pro'; font-size:13px; outline:none; transition:border-color .25s; }
+.foot .fform input::placeholder{ color:rgba(255,255,255,.4); }
+.foot .fform input:focus{ border-color:var(--g2); }
+.foot .fform button{ background:var(--g2); border:none; color:#fff; width:46px; height:46px; border-radius:50%; cursor:pointer; display:grid; place-items:center; flex-shrink:0; transition:background .25s, transform .25s; }
+.foot .fform button:hover{ background:var(--g); transform:translateY(-2px); }
+.foot .fbar{ position:relative; z-index:2; border-top:1px solid rgba(255,255,255,.1); padding:22px 0 26px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.foot .fbar span{ font-size:12.5px; color:rgba(255,255,255,.45); }
+.foot .fbar .flinks{ display:flex; gap:22px; }
+.foot .fbar .flinks a{ font-size:12.5px; color:rgba(255,255,255,.45); text-decoration:none; transition:color .22s; }
+.foot .fbar .flinks a:hover{ color:#fff; }
+@media (max-width:900px){ .foot .fgrid{ grid-template-columns:1fr 1fr; gap:34px; } .foot .fbar{ justify-content:center; text-align:center; } }
+@media (max-width:560px){ .foot .fgrid{ grid-template-columns:1fr; } }
+
+@media(max-width:520px){
+  .tgrid{ grid-template-columns:1fr; }
+  .tcard-body{ padding:20px 18px 22px; }
+}
+
+/* ===== REVEAL (entrada al hacer scroll) ===== */
+.reveal{ opacity:0; transform:translateY(48px) scale(.94); filter:blur(8px);
+  transition:opacity .8s cubic-bezier(.2,.8,.3,1), transform .8s cubic-bezier(.2,.8,.3,1),
+    filter .8s cubic-bezier(.2,.8,.3,1); }
+.reveal.in{ opacity:1; transform:none; filter:none; }
+@media(prefers-reduced-motion:reduce){
+  .reveal{ opacity:1; transform:none; filter:none; transition:none; }
+  .tflag svg, .tcupo i{ animation:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO / ENCABEZADO DE LA PÁGINA ===== -->
+<header class="lhero">
+  <div class="lhero-bg"><img src="marina-botes.jpg" alt="Excursiones de un día en Punta Cana"></div>
+  <div class="nav">
+    <span class="brand">IVONNE TOUR RD</span>
+    <nav>
+      <a href="excursiones.html" class="act">Excursiones</a>
+      <a href="listado.html">Tours</a>
+      <a href="index.html#destinos">Destinos</a>
+      <a href="index.html#contacto">Contacto</a>
+    </nav>
+    <a class="book" href="#" id="navBook">RESERVAR</a>
+  </div>
+
+  <div class="wrap">
+    <span class="lhero-badge">Excursiones de un día</span>
+    <h1>Un día. Una aventura que no vas a olvidar.</h1>
+    <p>Sales por la mañana, vives algo increíble, y de noche estás de vuelta. Yo pongo el transporte, el guía y cada detalle — tú solo trae ganas. Mira cuál te llama y ábrela para ver todo.</p>
+  </div>
+</header>
+
+<!-- ===== GRID DE TOURS ===== -->
+<section class="tours-sec">
+  <div class="wrap">
+    <div class="tours-head">
+      <div>
+        <span class="pill-o">Escoge tu día</span>
+        <h2 class="h-sec">Todas las <span class="h-green uline">excursiones de un día</span></h2>
+      </div>
+      <span class="tcount" id="tcount"></span>
+    </div>
+
+    <!-- TABS por tipo -->
+    <div class="tabs" id="tabs" role="tablist">
+      <button class="tab is-active" data-cat="all">Todas</button>
+      <button class="tab" data-cat="playa">Playa e Islas</button>
+      <button class="tab" data-cat="aventura">Aventura</button>
+      <button class="tab" data-cat="cultura">Cultura</button>
+      <button class="tab" data-cat="atardecer">Atardecer</button>
+    </div>
+
+    <div class="tgrid" id="tgrid"></div>
+  </div>
+</section>
+
+<!-- ===== SECCIÓN FINAL: elegir o personalizar ===== -->
+<section class="lcta">
+  <div class="wrap lcta-in">
+    <span class="lcta-pill">Hablemos</span>
+    <h2>¿No sabes cuál elegir?<br><span>O quieres uno hecho a tu medida.</span></h2>
+    <p>Dime con quién vienes, qué te gusta y cuántos días estás por aquí, y te digo cuál excursión es la tuya. Y si prefieres algo a tu aire, <mark>te armo un día privado por la zona de Punta Cana</mark> — las paradas, el ritmo y el presupuesto los pones tú. Sin compromiso: primero hablamos, después decides.</p>
+    <div class="lcta-btns">
+      <a class="btn btn-white btn-lg" href="#" id="ctaWa">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
+        Escríbeme y lo armamos
+      </a>
+    </div>
+    <p class="lcta-note">Te respondo yo misma, normalmente en menos de una hora.</p>
+  </div>
+</section>
+
+<!-- ===== FOOTER (mismo del home) ===== -->
+<footer class="foot">
+  <div class="blob fb1"></div><div class="blob fb2"></div>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="fbrand">IVONNE TOUR RD</div>
+        <p class="fabout">Excursiones y tours en el Caribe dominicano. Guías locales certificados, grupos pequeños y recuerdos que duran toda la vida.</p>
+        <div class="fsocial">
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.3 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.3.4c-.1.2-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .8 1.7 1.1 2 1.2.2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.4 2 1.7 3.5 3.8 3.8v3c-1.4.1-2.7-.3-3.9-1v6.4c0 3.4-2.6 5.8-5.8 5.8A5.8 5.8 0 0 1 4.3 15c0-3.3 2.9-5.9 6.3-5.6v3.1c-.4-.1-.8-.2-1.2-.2-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.8-1.1 2.8-2.7V3H16z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Explora</h4>
+        <ul>
+          <li><a href="excursiones.html">Excursiones</a></li>
+          <li><a href="listado.html">Tours de varios días</a></li>
+          <li><a href="index.html#angelica">Angélica te Guía</a></li>
+          <li><a href="index.html#historias">Historias de la Tribu</a></li>
+          <li><a href="#" id="footReservar">Reservar ahora</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Destinos</h4>
+        <ul>
+          <li><a href="#">Punta Cana</a></li>
+          <li><a href="#">Puerto Plata</a></li>
+          <li><a href="#">Samaná</a></li>
+          <li><a href="#">Santo Domingo</a></li>
+          <li><a href="#">Isla Saona</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <ul class="fcontact">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg> Bávaro · Punta Cana, República Dominicana</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4z"/></svg> +1 (809) 000-0000</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg> hola@ivonnetourrd.com</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg> Todos los días · 7:00 AM – 9:00 PM</li>
+        </ul>
+        <div class="fnews">
+          <p>Recibe ofertas antes que nadie</p>
+          <div class="fform">
+            <input type="email" placeholder="Tu correo" aria-label="Correo">
+            <button aria-label="Suscribirme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fbar">
+      <span>© 2026 IVONNE TOUR RD · Hecho con 🌴 en República Dominicana</span>
+      <div class="flinks"><a href="#">Términos</a><a href="#">Privacidad</a><a href="#">Cancelaciones</a><a href="#">Preguntas frecuentes</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN
+   ============================================================ */
+const WHATSAPP = '18090000000';   // <-- mismo número que en detalle.html
+const DETALLE  = 'detalle-excursion.html';  // <-- página de detalle de excursiones
+const RESERVA  = 'reservar.html';  // <-- página de reserva en línea (aquí irá la API de pago + email automático)
+
+/* ============================================================
+   DATOS DE LAS EXCURSIONES (de un día)
+   ------------------------------------------------------------
+   Todo editable. Campos de cada excursión:
+     name      -> nombre
+     hours     -> duración ("7 horas")
+     salidas   -> lista de horarios de salida  ['8:00 AM','2:00 PM']
+     nivel     -> 'Relajado' | 'Activo' | 'Extremo'
+     max       -> máximo de personas
+     kids      -> true si es apto para niños
+     pickup    -> true si te recogen en el hotel
+     idiomas   -> idiomas del guía  ['Español','Inglés']
+     viajeros  -> cuántos ya la vivieron (prueba social)
+     zona      -> a dónde van
+     incluye   -> lista -> chips de lo que incluye
+     llevar    -> lista -> qué debe traer el cliente
+     cancela   -> texto de cancelación (o '' para ocultar)
+     hook      -> frase de venta, de tú a tú
+     hero      -> foto
+     was/now   -> precio antes / ahora
+     rating/reviews
+     tag       -> etiqueta de enfoque (opcional)
+     best      -> true -> cinta "más elegida"
+     cupo      -> línea naranja de urgencia (opcional)
+   ============================================================ */
+const EXCURSIONES = {
+
+  'isla-saona': {
+    name:'Isla Saona en Catamarán',
+    hours:'8 horas', salidas:['7:30 AM'], nivel:'Relajado', max:40,
+    kids:true, pickup:true, idiomas:['Español','Inglés'], viajeros:2400,
+    zona:'Isla Saona', cat:'playa',
+    incluye:['Transporte', 'Almuerzo buffet', 'Barra libre', 'Guía', 'Snorkel'],
+    llevar:['Traje de baño', 'Protector solar', 'Toalla', 'Efectivo'],
+    cancela:'Cancela gratis hasta 24h antes',
+    hook:'La postal del Caribe que tienes en la cabeza, existe — y es aquí. Catamarán con música, la piscina natural donde el agua te llega a la cintura en pleno mar, y una playa de arena blanca que no vas a querer soltar.',
+    hero:'marina-botes.jpg',
+    was:120, now:89,
+    rating:'4.9', reviews:212,
+    best:true,
+    cupo:'La más pedida · reserva con tiempo'
+  },
+
+  'buggies-aventura': {
+    name:'Buggies por la Selva',
+    hours:'4 horas', salidas:['9:00 AM','2:00 PM'], nivel:'Extremo', max:20,
+    kids:false, pickup:true, idiomas:['Español','Inglés'], viajeros:1800,
+    zona:'Macao · campo dominicano', cat:'aventura',
+    incluye:['Transporte', 'Buggy 2 personas', 'Cueva y cenote', 'Café y cacao', 'Guía'],
+    llevar:['Ropa que se pueda ensuciar', 'Pañuelo para el polvo', 'Efectivo'],
+    cancela:'Cancela gratis hasta 24h antes',
+    hook:'Ensúciate. Ríe. Grita en las curvas. Manejas tu propio buggy por caminos de tierra, te bañas en un cenote de agua fría y terminas probando café y cacao hechos como hace 100 años.',
+    hero:'cuatrimoto-playa.jpg',
+    was:75, now:59,
+    rating:'4.8', reviews:156,
+    tag:'Adrenalina',
+    cupo:'Dos salidas al día'
+  },
+
+  'hoyo-azul': {
+    name:'Hoyo Azul + Scape Park',
+    hours:'6 horas', salidas:['8:00 AM','11:00 AM'], nivel:'Activo', max:25,
+    kids:true, pickup:true, idiomas:['Español','Inglés'], viajeros:1200,
+    zona:'Cap Cana', cat:'aventura',
+    incluye:['Transporte', 'Entradas', 'Tirolesas', 'Cenote Hoyo Azul', 'Guía'],
+    llevar:['Traje de baño', 'Protector solar', 'Tenis cómodos'],
+    cancela:'Cancela gratis hasta 24h antes',
+    hook:'Un cenote de agua turquesa al pie de un acantilado, tirolesas sobre la selva y senderos entre cuevas. Un día de naturaleza pura sin salir de la zona, perfecto si quieres aventura suave.',
+    hero:'mirador-valle-mar.jpg',
+    was:110, now:85,
+    rating:'4.9', reviews:98,
+    cupo:''
+  },
+
+  'isla-catalina': {
+    name:'Isla Catalina · Buceo y Snorkel',
+    hours:'8 horas', salidas:['7:00 AM'], nivel:'Activo', max:30,
+    kids:true, pickup:true, idiomas:['Español','Inglés'], viajeros:960,
+    zona:'Isla Catalina · La Romana', cat:'playa',
+    incluye:['Transporte', 'Almuerzo', 'Equipo snorkel', 'Barra libre', 'Guía'],
+    llevar:['Traje de baño', 'Protector solar', 'Toalla', 'Efectivo'],
+    cancela:'Cancela gratis hasta 24h antes',
+    hook:'El arrecife aquí es de los mejores del país — el famoso "muro" que cae a lo hondo lleno de vida. Metes la cara al agua y es otro mundo. Y si nunca has buceado, hoy es el día.',
+    hero:'amigas-bote-1.jpg',
+    was:135, now:99,
+    rating:'4.8', reviews:74,
+    tag:'Fondo marino',
+    cupo:''
+  },
+
+  'santo-domingo': {
+    name:'Santo Domingo Colonial',
+    hours:'10 horas', salidas:['6:30 AM'], nivel:'Relajado', max:16,
+    kids:true, pickup:true, idiomas:['Español','Inglés'], viajeros:640,
+    zona:'Santo Domingo', cat:'cultura',
+    incluye:['Transporte', 'Almuerzo', 'Entradas', 'Guía historiador'],
+    llevar:['Zapatos cómodos', 'Gorra', 'Cámara', 'Efectivo'],
+    cancela:'Cancela gratis hasta 48h antes',
+    hook:'La primera ciudad de América, contada por alguien que la conoce de verdad. Caminas por la calle más antigua del continente, ves la catedral de 1540, y entiendes de dónde viene todo. Historia que se siente, no que se estudia.',
+    hero:'grupo-palapa-1.jpg',
+    was:130, now:95,
+    rating:'4.7', reviews:61,
+    cupo:'Sale temprano · desayuno en ruta'
+  },
+
+  'catamaran-atardecer': {
+    name:'Catamarán al Atardecer',
+    hours:'3 horas', salidas:['4:00 PM'], nivel:'Relajado', max:35,
+    kids:false, pickup:true, idiomas:['Español','Inglés'], viajeros:1500,
+    zona:'Costa de Bávaro', cat:'atardecer',
+    incluye:['Transporte', 'Barra libre', 'Música en vivo', 'Snorkel', 'Guía'],
+    llevar:['Traje de baño', 'Una muda seca', 'Efectivo'],
+    cancela:'Cancela gratis hasta 24h antes',
+    hook:'El plan perfecto para cerrar el día. Navegas por la costa con un trago en la mano, te tiras al agua cuando quieras, y ves el sol caer sobre el mar mientras suena la música. Romántico o en grupo, siempre pega.',
+    hero:'amigas-bote-2.jpg',
+    was:80, now:65,
+    rating:'5.0', reviews:88,
+    tag:'Atardecer',
+    cupo:'Solo por la tarde'
+  }
+
+};
+
+/* ============================================================
+   RENDER — no hace falta tocar de aquí para abajo
+   ============================================================ */
+const PIC = f => encodeURI(f);
+const waLink = txt => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(txt)}`;
+
+// iconos svg reutilizables
+const IC = {
+  clock:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>',
+  sun:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19" stroke-linecap="round"/></svg>',
+  users:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 20v-2a4 4 0 0 0-8 0v2M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  bolt:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke-linejoin="round"/></svg>',
+  pin:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>',
+  kid:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="2.5"/><path d="M12 8v7M8 11h8M9 21l3-4 3 4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  van:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13l2-6h9l4 4h3v5h-3M3 13v3h2M8 16h6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>',
+  check:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  chat:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.8A8 8 0 1 1 21 12z" stroke-linejoin="round"/></svg>',
+  bag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 0 1 6 0" stroke-linecap="round"/></svg>',
+  shield:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  wa:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.3 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.5l-.3.4c-.1.2-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .8 1.7 1.1 2 1.2.2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"/></svg>',
+  lock:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>',
+  star:'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>',
+  arrow:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+
+// color del nivel
+const nivelClase = n => n==='Extremo' ? 'nv-ext' : (n==='Activo' ? 'nv-act' : 'nv-rel');
+
+const keys = Object.keys(EXCURSIONES);
+
+// nombres de categoría para el contador
+const CAT_LABEL = { all:'', playa:'Playa e Islas', aventura:'Aventura', cultura:'Cultura', atardecer:'Atardecer' };
+
+// construye el HTML de UNA cajita horizontal
+function cardHTML(id){
+  const t = EXCURSIONES[id];
+  const chips = (t.incluye||[]).map(x => `<span class="chip">${IC.check}${x}</span>`).join('');
+  const horarios = (t.salidas||[]).map(h => `<span class="hchip">${h}</span>`).join('');
+  const idiomas = (t.idiomas||[]).join(' · ');
+  const abono = Math.round((t.now * 0.20));
+  // el botón principal lleva a la página de reserva en línea (ahí irá la API de pago + email)
+  const reservaURL = `${RESERVA}?id=${id}`;
+  return `
+  <article class="tcard enter">
+    <div class="tcard-media">
+      ${t.best ? `<span class="tflag">${IC.star} Más elegida</span>` : ''}
+      <span class="trate">${IC.star} ${t.rating} <span style="opacity:.7;font-weight:500">(${t.reviews})</span></span>
+      <span class="tdur">${IC.clock} ${t.hours}</span>
+      <img src="${PIC(t.hero)}" alt="${t.name}" loading="lazy">
+    </div>
+    <div class="tcard-body">
+      ${t.tag ? `<span class="ttag">${t.tag}</span>` : ''}
+      <h3>${t.name}</h3>
+      <p class="zona">${IC.pin}${t.zona}${t.viajeros ? ` <span class="viaj">· +${t.viajeros.toLocaleString('es-DO')} ya la vivieron</span>` : ''}</p>
+      <p class="tcard-hook">${t.hook}</p>
+
+      <div class="body-cols">
+        <div class="col-info">
+          <div class="tmeta">
+            <div>${IC.clock}<b>${t.hours}</b></div>
+            <div><span class="nivel ${nivelClase(t.nivel)}">${IC.bolt}${t.nivel}</span></div>
+            ${idiomas ? `<div>${IC.chat}${idiomas}</div>` : ''}
+          </div>
+
+          <div class="hsal">
+            <span class="hsal-tit">${IC.sun}${t.salidas.length>1?'Salidas':'Salida'}</span>
+            <div class="hsal-list">${horarios}</div>
+          </div>
+
+          <div class="incluye">
+            <span class="incl-tit">Incluye</span>
+            <div class="chips">${chips}</div>
+          </div>
+
+          <div class="tfacts">
+            ${t.pickup ? `<span class="fact ok">${IC.van} Te recogemos en tu hotel</span>` : ''}
+            <span class="fact">${IC.users} Grupos de hasta ${t.max}</span>
+            ${t.kids ? `<span class="fact ok">${IC.kid} Apto para niños</span>` : `<span class="fact no">${IC.kid} Solo adultos</span>`}
+            ${t.llevar && t.llevar.length ? `<span class="fact">${IC.bag} Lleva: ${t.llevar.join(', ')}</span>` : ''}
+          </div>
+        </div>
+
+        <div class="col-buy">
+          <div class="paybox">
+            <div class="paybox-head">${IC.shield}<span>Aparta con solo</span></div>
+            <div class="paybox-main"><b>US$${abono}</b> <span class="paybox-pct">20%</span></div>
+            <div class="paybox-sub">El resto lo pagas al subir a la guagua. Confirmación al instante.</div>
+          </div>
+
+          <div class="tprice">
+            <span class="was">US$${t.was}</span>
+            <span class="now">US$${t.now}</span>
+            <span class="per">/persona</span>
+          </div>
+
+          <div class="cardbtns">
+            <a class="cbtn cbtn-go" href="${reservaURL}">
+              ${IC.lock}
+              <span><b>Reservar ahora</b><small>Aparta con el 20% · pago seguro</small></span>
+            </a>
+            <a class="cbtn cbtn-alt" href="${DETALLE}?id=${id}">
+              <span><b>Ver todos los detalles</b><small>Videos, opiniones y más</small></span>
+              ${IC.arrow}
+            </a>
+          </div>
+
+          ${t.cancela ? `<div class="cancela">${IC.check}${t.cancela}</div>` : ''}
+          ${t.cupo ? `<div class="tcupo"><i></i>${t.cupo}</div>` : ''}
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+
+// pinta el grid según la categoría activa
+function render(cat){
+  const lista = keys.filter(id => cat==='all' || EXCURSIONES[id].cat === cat);
+  const grid = document.getElementById('tgrid');
+  grid.innerHTML = lista.map(cardHTML).join('');
+  // contador
+  const n = lista.length;
+  const suf = n === 1 ? 'excursión' : 'excursiones';
+  document.getElementById('tcount').textContent =
+    cat==='all' ? `${n} ${suf}` : `${n} en ${CAT_LABEL[cat]}`;
+}
+
+// arranca mostrando todas
+render('all');
+
+// clics en los tabs
+document.getElementById('tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab');
+  if(!btn) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('is-active'));
+  btn.classList.add('is-active');
+  render(btn.dataset.cat);
+});
+
+// enlaces de whatsapp
+const waTxt = 'Hola Ivonne! Estoy viendo las excursiones de un día y quiero que me ayudes a elegir. ¿Qué me recomiendas?';
+document.getElementById('navBook').href = waLink(waTxt);
+document.getElementById('ctaWa').href = waLink(waTxt);
+document.getElementById('footReservar').href = waLink(waTxt);
+
+
+/* ===== HOVER: realce simple (sin inclinación 3D) ===== */
+</script>
+</body>
+</html>
