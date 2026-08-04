@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sección Tribu — IVONNE TOUR RD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===================================================
+   SECCIÓN TRIBU — versión final compacta
+   Reemplaza la actual "Historias de la Tribu"
+   =================================================== */
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{
+  font-family:'Be Vietnam Pro',sans-serif;
+  background:#fff;
+  color:#1b241e;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+}
+
+.tribu-section{
+  position:relative;
+  background:linear-gradient(180deg,#f0f7ee 0%,#e8f2e6 100%);
+  padding:clamp(60px,8vw,90px) clamp(18px,4vw,36px);
+  overflow:hidden;
+}
+
+/* iconos decorativos flotantes de fondo */
+.tribu-section::before,
+.tribu-section::after{
+  content:''; position:absolute; pointer-events:none; opacity:.35;
+}
+.tribu-section::before{
+  top:8%; left:4%; width:60px; height:60px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2312854c' stroke-width='1.5'><circle cx='12' cy='12' r='10'/><polygon points='16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88'/></svg>") center/contain no-repeat;
+}
+.tribu-section::after{
+  bottom:6%; right:5%; width:70px; height:70px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2312854c' stroke-width='1.5'><circle cx='12' cy='12' r='10'/><path d='M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20'/></svg>") center/contain no-repeat;
+}
+
+.tribu-wrap{ max-width:1180px; margin:0 auto; position:relative; z-index:2; }
+
+/* ==================== HEADER ==================== */
+.tribu-eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  font-family:'Plus Jakarta Sans'; font-weight:700; font-size:12px;
+  color:#12854c; letter-spacing:.28em; text-transform:uppercase;
+  margin-bottom:18px;
+}
+.tribu-eyebrow::before,
+.tribu-eyebrow::after{ content:''; width:28px; height:2px; background:#12854c; }
+
+.tribu-title{
+  text-align:center;
+  font-family:'Plus Jakarta Sans'; font-weight:900;
+  font-size:clamp(30px,4.5vw,48px);
+  line-height:1.15; letter-spacing:-.03em;
+  margin-bottom:16px;
+  color:#1b241e;
+}
+.tribu-title span{
+  color:#12854c;
+  border-bottom:4px solid #12854c;
+  padding-bottom:2px;
+}
+
+.tribu-subtitle{
+  text-align:center;
+  font-size:clamp(15px,1.7vw,17px);
+  color:#5c6b60;
+  line-height:1.7;
+  max-width:640px;
+  margin:0 auto 44px;
+}
+
+/* ==================== CARRUSEL DE VIDEOS ==================== */
+.vid-carousel{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:26px;
+}
+@media(max-width:1000px){ .vid-carousel{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:520px){ .vid-carousel{ grid-template-columns:1fr; } }
+
+.vid-card{
+  position:relative;
+  aspect-ratio:9/13;
+  border-radius:18px;
+  overflow:hidden;
+  cursor:pointer;
+  background:#c5d5c9;
+  box-shadow:0 20px 40px -25px rgba(0,0,0,.35);
+  transition:.3s;
+}
+.vid-card:hover{ transform:translateY(-6px); box-shadow:0 30px 60px -25px rgba(0,0,0,.45); }
+
+.vid-card img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.vid-card .vid-overlay{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, transparent 40%, rgba(0,0,0,.75) 100%);
+}
+.vid-card .verify-badge{
+  position:absolute; top:14px; left:14px;
+  background:rgba(255,255,255,.95); color:#0b5a34;
+  font-family:'Plus Jakarta Sans'; font-weight:700; font-size:11px;
+  padding:5px 11px; border-radius:100px;
+  display:flex; align-items:center; gap:5px;
+}
+.vid-card .play-btn{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:64px; height:64px; border-radius:50%;
+  background:rgba(255,255,255,.25); backdrop-filter:blur(10px);
+  border:2px solid rgba(255,255,255,.6);
+  display:grid; place-items:center;
+  transition:.3s;
+}
+.vid-card:hover .play-btn{ background:#12854c; border-color:#12854c; transform:translate(-50%,-50%) scale(1.1); }
+.vid-card .vid-info{
+  position:absolute; bottom:0; left:0; right:0;
+  padding:18px 16px; color:#fff;
+}
+.vid-info .vid-tag{
+  font-family:'Plus Jakarta Sans'; font-weight:700; font-size:10.5px;
+  letter-spacing:.15em; text-transform:uppercase;
+  margin-bottom:5px;
+}
+.vid-info .vid-tag--agua{ color:#2eb8e0; }
+.vid-info .vid-tag--tierra{ color:#4bcf7d; }
+.vid-info .vid-tag--evento{ color:#e0742a; }
+.vid-info .vid-name{
+  font-family:'Plus Jakarta Sans'; font-weight:800; font-size:17px;
+  line-height:1.2; margin-bottom:2px;
+}
+.vid-info .vid-sub{
+  font-size:11.5px; color:rgba(255,255,255,.75);
+  letter-spacing:.1em; text-transform:uppercase;
+}
+
+/* barra inferior de color */
+.vid-card::after{
+  content:''; position:absolute; bottom:0; left:0; right:0; height:5px;
+  background:var(--bar,#12854c); z-index:3;
+}
+.vid-card[data-tipo="agua"]{ --bar:#2eb8e0; }
+.vid-card[data-tipo="tierra"]{ --bar:#4bcf7d; }
+.vid-card[data-tipo="evento"]{ --bar:#e0742a; }
+
+/* navegación del carrusel */
+.carousel-nav{
+  display:flex; align-items:center; justify-content:center; gap:20px;
+  margin-bottom:50px;
+}
+.carousel-arrow{
+  width:44px; height:44px; border-radius:50%;
+  background:#fff; border:1.5px solid #d4e0d1;
+  display:grid; place-items:center;
+  cursor:pointer; transition:.2s;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.carousel-arrow:hover{ border-color:#12854c; background:#f2f9f4; }
+.carousel-dots{ display:flex; gap:7px; }
+.dot{ width:8px; height:8px; border-radius:50%; background:#c5d5c9; transition:.2s; }
+.dot.active{ background:#12854c; width:24px; border-radius:6px; }
+
+/* ==================== ACORDEÓN COMPACTO ==================== */
+.acc-header{
+  text-align:center;
+  margin-bottom:24px;
+}
+.acc-badge{
+  display:inline-flex; align-items:center; gap:8px;
+  background:#fff; border:1px solid #d4e0d1;
+  border-radius:100px; padding:6px 14px;
+  font-family:'Plus Jakarta Sans'; font-weight:700; font-size:11px;
+  color:#0b5a34; letter-spacing:.08em; text-transform:uppercase;
+  margin-bottom:14px;
+}
+.acc-header h3{
+  font-family:'Plus Jakarta Sans'; font-weight:900;
+  font-size:clamp(22px,3vw,30px);
+  letter-spacing:-.02em; line-height:1.25;
+  color:#1b241e;
+  max-width:600px; margin:0 auto;
+}
+
+.acc-wrap{
+  max-width:680px; margin:0 auto 50px;
+  background:#fff;
+  border:1px solid #d4e0d1;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 15px 40px -25px rgba(0,0,0,.2);
+}
+
+.acc-item{
+  border-bottom:1px solid #eaefe6;
+}
+.acc-item:last-child{ border-bottom:none; }
+
+.acc-head{
+  width:100%;
+  display:flex; align-items:center; gap:14px;
+  padding:18px 22px;
+  background:none; border:none;
+  cursor:pointer;
+  font-family:'Plus Jakarta Sans'; font-weight:700; font-size:15px;
+  color:#1b241e;
+  text-align:left;
+  transition:.2s;
+}
+.acc-head:hover{ background:#f7fbf6; }
+
+.acc-icon-box{
+  width:38px; height:38px; border-radius:11px;
+  display:grid; place-items:center;
+  font-size:18px; flex-shrink:0;
+}
+.acc-item:nth-child(1) .acc-icon-box{ background:linear-gradient(135deg,#e6f5ea,#c8e8d1); }
+.acc-item:nth-child(2) .acc-icon-box{ background:linear-gradient(135deg,#fdf0e1,#fbdcbc); }
+.acc-item:nth-child(3) .acc-icon-box{ background:linear-gradient(135deg,#e0f2f9,#c2e5f2); }
+
+.acc-title-text{ flex:1; }
+.acc-plus{
+  width:26px; height:26px; border-radius:50%;
+  background:#f2f9f4; color:#0b5a34;
+  display:grid; place-items:center;
+  font-size:15px; font-weight:800;
+  transition:.3s;
+  flex-shrink:0;
+}
+.acc-item.active .acc-plus{
+  background:#12854c; color:#fff;
+  transform:rotate(45deg);
+}
+
+.acc-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+}
+.acc-item.active .acc-body{ max-height:400px; }
+
+.acc-body-inner{
+  padding:0 22px 20px 74px;
+  font-size:14px; color:#5c6b60;
+  line-height:1.7;
+}
+.acc-body-inner strong{ color:#1b241e; font-weight:700; }
+
+/* ==================== CTA FINAL ==================== */
+.tribu-cta{
+  text-align:center;
+  padding:0 20px;
+}
+.tribu-cta p{
+  font-family:'Plus Jakarta Sans'; font-weight:700;
+  font-size:clamp(18px,2.4vw,22px);
+  color:#1b241e;
+  margin-bottom:22px;
+  line-height:1.35;
+}
+.tribu-cta p span{ color:#12854c; }
+.tribu-cta .cta-btn{
+  display:inline-flex; align-items:center; gap:10px;
+  background:#12854c; color:#fff;
+  font-family:'Plus Jakarta Sans'; font-weight:800; font-size:15.5px;
+  padding:17px 38px; border:none; border-radius:100px;
+  cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 16px 34px -12px rgba(18,133,76,.6);
+  transition:.25s;
+}
+.tribu-cta .cta-btn:hover{ background:#0b5a34; transform:translateY(-2px); box-shadow:0 20px 40px -12px rgba(18,133,76,.7); }
+</style>
+</head>
+<body>
+
+<section class="tribu-section" id="tribu">
+  <div class="tribu-wrap">
+
+    <!-- ==================== HEADER ==================== -->
+    <div class="tribu-eyebrow">Comunidad</div>
+
+    <h1 class="tribu-title">Historias de la <span>Tribu</span></h1>
+
+    <p class="tribu-subtitle">
+      En internet cualquiera dice que sus tours son los mejores.<br>
+      Nosotros preferimos que lo digan ellos. Mira 👇
+    </p>
+
+    <!-- ==================== CARRUSEL DE VIDEOS ==================== -->
+    <div class="vid-carousel">
+
+      <div class="vid-card" data-tipo="agua">
+        <img src="images/adrenalina-samana.jpg" alt="Adrenalina en Samana">
+        <div class="vid-overlay"></div>
+        <span class="verify-badge">✓ Tour Verificado</span>
+        <div class="play-btn">
+          <svg width="22" height="22" fill="#fff" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vid-info">
+          <div class="vid-tag vid-tag--agua">Experiencia acuática</div>
+          <div class="vid-name">Adrenalina en Samaná</div>
+          <div class="vid-sub">Jet Ski Extreme</div>
+        </div>
+      </div>
+
+      <div class="vid-card" data-tipo="tierra">
+        <img src="images/dominando-el-barro.jpg" alt="Dominando el Barro">
+        <div class="vid-overlay"></div>
+        <span class="verify-badge">✓ Tour Verificado</span>
+        <div class="play-btn">
+          <svg width="22" height="22" fill="#fff" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vid-info">
+          <div class="vid-tag vid-tag--tierra">Aventura terrestre</div>
+          <div class="vid-name">Dominando el Barro</div>
+          <div class="vid-sub">Buggy Jungle</div>
+        </div>
+      </div>
+
+      <div class="vid-card" data-tipo="evento">
+        <img src="images/fiesta-infinita.jpg" alt="Fiesta Infinita">
+        <div class="vid-overlay"></div>
+        <span class="verify-badge">✓ Tour Verificado</span>
+        <div class="play-btn">
+          <svg width="22" height="22" fill="#fff" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vid-info">
+          <div class="vid-tag vid-tag--evento">Evento exclusivo</div>
+          <div class="vid-name">Fiesta Infinita</div>
+          <div class="vid-sub">Party Catamaran</div>
+        </div>
+      </div>
+
+      <div class="vid-card" data-tipo="agua">
+        <img src="images/bahia-suenos.jpg" alt="Bahía de Sueños">
+        <div class="vid-overlay"></div>
+        <span class="verify-badge">✓ Tour Verificado</span>
+        <div class="play-btn">
+          <svg width="22" height="22" fill="#fff" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vid-info">
+          <div class="vid-tag vid-tag--agua">Experiencia acuática</div>
+          <div class="vid-name">Bahía de Sueños</div>
+          <div class="vid-sub">Catamarán al atardecer</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="carousel-nav">
+      <button class="carousel-arrow" aria-label="Anterior">
+        <svg width="18" height="18" fill="none" stroke="#0b5a34" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="carousel-dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <button class="carousel-arrow" aria-label="Siguiente">
+        <svg width="18" height="18" fill="none" stroke="#0b5a34" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <!-- ==================== ACORDEÓN COMPACTO ==================== -->
+    <div class="acc-header">
+      <span class="acc-badge">🎬 Cómo funcionan estos reviews</span>
+      <h3>¿Y cómo sé que estos reviews son reales?</h3>
+    </div>
+
+    <div class="acc-wrap">
+
+      <div class="acc-item">
+        <button class="acc-head">
+          <span class="acc-icon-box">🔗</span>
+          <span class="acc-title-text">¿Y cómo llegan estas historias aquí?</span>
+          <span class="acc-plus">+</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            Después del tour, Ivonne te contacta — nada forzado. Te pregunta si grabaste algún video, y si quieres <strong>nosotros te lo editamos.</strong><br><br>
+            Si nos das permiso pa' subirlo, aparece aquí. Todo lo que ves lo grabaron y dijeron ellos.
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-head">
+          <span class="acc-icon-box">📱</span>
+          <span class="acc-title-text">Nadie les dice qué decir</span>
+          <span class="acc-plus">+</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            Un testimonio ensayado se huele a leguas. Por eso solo pedimos permiso pa' subirlo — <strong>el contenido es 100% de ellos.</strong><br><br>
+            Lo bueno y lo mejorable. Todo cuenta.
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-head">
+          <span class="acc-icon-box">✂️</span>
+          <span class="acc-title-text">Sí, algunos los editamos</span>
+          <span class="acc-plus">+</span>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            Le metemos música y cortes pa' que el cliente lo suba a su Instagram.<br><br>
+            <strong>Pero lo que sale de su boca, sale de su boca.</strong> La edición es un regalo. Las palabras son de ellos.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== CTA FINAL ==================== -->
+    <div class="tribu-cta">
+      <p>Después de tu tour, la <span>próxima historia puede ser la tuya</span>.</p>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+// Acordeón — abre/cierra al tocar, solo uno abierto a la vez
+document.querySelectorAll('.acc-head').forEach(head => {
+  head.addEventListener('click', () => {
+    const item = head.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
